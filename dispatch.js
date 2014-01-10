@@ -7,4 +7,11 @@ var dispatch = function (url, code) {
 };
 
 // Sample for collabedit
-document.getElementById("textarea").onkeyup = function () {dispatch('http://localhost:3000', document.getElementById("content_highlight").textContent);}
+document.getElementById("textarea").onkeyup = function () {
+	var text = document.getElementById("content_highlight").textContent;
+	
+	// Parse/strip if needed
+
+	// Dispatch
+	dispatch('http://localhost:3000', text);
+}

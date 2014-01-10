@@ -21,6 +21,13 @@ var dispatch = function (url, code) {
 	xhr.send(code);
 };
 
-// Sample for collabedit, don't forget that this needs to be run in the scope of the editor frame (frame_the_input).
-document.getElementById("textarea").onkeyup = function () {dispatch('http://localhost:3000', document.getElementById("content_highlight").textContent);}
+// Sample for collabedit
+document.getElementById("textarea").onkeyup = function () {
+	var text = document.getElementById("content_highlight").textContent;
+	
+	// Parse/strip if needed
+
+	// Dispatch
+	dispatch('http://localhost:3000', text);
+}
 ```
