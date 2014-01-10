@@ -3,6 +3,10 @@ collabrunner
 
 Node runner for continuously evaluating POSTed js code from collabedit
 
+### How this works
+Quite simply, the node server just listens for `text/plain` JavaScript code that is sent to it through an HTTP POST.
+[CORS](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS) allows these to be sent across domains so that this can work from any origin.
+
 Server
 ------
 
