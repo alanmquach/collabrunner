@@ -1,16 +1,17 @@
-collabrunner
-============
+# collabrunner #
 
 Node runner for continuously evaluating POSTed js code from collabedit
 
-### How this works
-Quite simply, the node server just listens for `text/plain` JavaScript code that is sent to it through an HTTP POST.
+## How this works ##
+
+1. The node server just listens for `text/plain` JavaScript code that is sent to it through an HTTP POST and writes it to `code.js`.
 [CORS](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS) allows these to be sent across domains so that this can work from any origin.
 
-This code is then written to a file `code.js` which can be run automatically with the packaged `grunt watch` task. The task pipes `&>` to `out.log` which is watched by `server.js` who uses socket.io to emit the changes to a page which dynamically displays its contents.
+2. A `grunt watch` task listens for changes on `code.js`, runs that fine, and pipes `&>` to `out.log`.
 
-Server
-------
+3. `server.js` watches `out.log` for changes and uses socket.io to emit the contents to `index.html` which simply dynamically updates it in a `<pre>` block.
+
+## Server ##
 
 Run the server locally: `node server.js`.
 
@@ -18,8 +19,7 @@ Separately start the `grunt watch` task to run the code everytime it detects cha
 
 I personally run a [localtunnel](http://localtunnel.me) so that whoever I'm collaborating with can also see the output as well.
 
-Client
-------
+## Client ##
 
 Then in collabedit, or some equivalent, collect the code and dispatch it like so:
 ```js
