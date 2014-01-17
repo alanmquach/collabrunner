@@ -38,6 +38,7 @@ app.post('/', function(req, res) {
 		payload = payload.split('\n');
 		end = end || payload.length;
 		payload = payload.splice(start-1, end-start+1);
+		payload = (new Array(start-1)).concat(payload);
 		payload = payload.join('\n');
 	}
 
