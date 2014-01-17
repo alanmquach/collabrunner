@@ -23,10 +23,7 @@ app.all('/', function(req, res, next) {
 	next();
 });
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
-});
-
+// Recieves code via POST and writes it to code.js
 app.post('/', function(req, res) {
 	var payload = req.text,
 	start = req.query.start,
@@ -53,6 +50,12 @@ app.post('/', function(req, res) {
 	res.send("");
 });
 
+// Hosts index.html for seeing output sent in realtime.
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
+
+// Socket initialization
 io.sockets.on('connection', function (socket) {
 	// Bookkeeping
 	clients[socket.id] = socket;
@@ -66,6 +69,7 @@ io.sockets.on('connection', function (socket) {
 	socket.emit('output', { output: 'Ready.' });
 });
 
+// Emit the contents of out.log over socket.io
 fs.watch('out.log', function () {
 	console.log("Contents changed, reading...");
 	fs.readFile('out.log', 'utf8', function (err, data) {
