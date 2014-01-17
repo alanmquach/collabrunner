@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<pre id="console"></pre>
+  	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect(document.location.origin);
+		socket.on('output', function (data) {
+			document.getElementById('console').innerHTML = data.output;
+		});
+	</script>
+  </body>
+</html>
