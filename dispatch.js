@@ -1,6 +1,4 @@
-var
-
-start, end, baseurl;
+var start, end, baseurl;
 
 dispatch = function (code) {
 	var xhr = new XMLHttpRequest();
