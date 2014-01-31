@@ -55,6 +55,11 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
+// Aliasing "code.js" to index.html lets us overload any old web editer to modify code.js and "preview" the output
+app.get('/code.js', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
+
 // Socket initialization
 io.sockets.on('connection', function (socket) {
 	// Bookkeeping
@@ -65,20 +70,17 @@ io.sockets.on('connection', function (socket) {
 		delete clients[socket.id];
 	});
 
-	// Push
-	socket.emit('output', { output: 'Ready.' });
+	// Initial push
+	fs.readFile('out.log', 'utf8', function (err, data) {
+		var c, content = err ? "Error reading file program output." : data;
+		socket.emit('output', {output: content});
+    });
 });
 
 // Emit the contents of out.log over socket.io
 fs.watch('out.log', function () {
-	console.log("Contents changed, reading...");
 	fs.readFile('out.log', 'utf8', function (err, data) {
-		console.log("Done reading. Publishing...");
-		var c, content;
-        if (err) {
-            content = "Error reading file program output.";
-        }
-        content = data;
+		var c, content = err ? "Error reading file program output." : data;
 
         // Publish
 		for (c in clients) {
@@ -87,4 +89,5 @@ fs.watch('out.log', function () {
     });
 });
 
-server.listen(3000);
+server.listen(80);
+
